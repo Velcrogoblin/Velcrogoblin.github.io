@@ -1,0 +1,73 @@
+/*  ---------------- LOGIN BUTTONS  -----------------  **/
+
+.login-button {
+    margin: 3vh 0;
+    display: flex;
+    justify-content: center;
+}
+.login-button a {
+    font-size: 2vh;
+}
+
+.tn-button-a {
+    color: #2c3357;
+    text-decoration: none;
+}
+.tn-button-a:hover {
+    color: #2c3357;
+}
+
+.login-button button {
+    background-color: white;
+    padding: 1vh 2vh;
+    transition: all 0.3s ease;
+    border-radius: 16px;
+    border: 1px black solid;
+}
+.login-button button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+    background-color: white;
+}
+.login-button-navbar2 button {
+    transition: all 0.3s ease;
+}
+.login-button-navbar2 button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+}
+.login-button-text {
+    display: flex;
+}
+.login-button-p {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding-left: 1rem;
+}
+.login-button-logo {
+    max-height: 4vh;
+}
+
+
+
+nav {
+    margin-bottom: 30px;
+}
+
+.main-logo {
+    width: 350px;
+}
+
+.image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-image {
+    max-width: 500px;
+    border-radius: 16px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+
+}
