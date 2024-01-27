@@ -4,10 +4,6 @@
 
   //JAVASCRIPT
 
- // let switchCheckbox = document.getElementById('ecomm-mainSwitch');
-  let infoButton = document.getElementById('ecomm-infoButton');
-  let infoClose = document.getElementById('ecomm-infoClose');
-
 
 
   function openModal() {
@@ -417,14 +413,19 @@
     reviewDiv4.insertAdjacentElement("beforebegin", newDiv);
 
     document.head.appendChild(style);
+   
   }
 
-  // infoButton.addEventListener('click', function () {
-  //   openModal()
-  // })
-  // infoClose.addEventListener('click', function () {
-  //   closeModal()
-  // })
+  //let switchCheckbox = document.getElementById('ecomm-mainSwitch');
+  let infoButton = document.getElementById('ecomm-infoButton');
+  let infoClose = document.getElementById('ecomm-infoClose');
+
+  infoButton.addEventListener('click', function () {
+    openModal()
+  })
+  infoClose.addEventListener('click', function () {
+    closeModal()
+  })
 
   showEnvironmentDiv(5, "aporta al medioambiente!", 4);
 })();
