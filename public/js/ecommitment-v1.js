@@ -4,29 +4,7 @@
 
   //JAVASCRIPT
 
-
-
-  function openModal() {
-    var modal = document.getElementById("ecomm-infoModal");
-    modal.style.display = "block";
-
-    // Add event listener to close modal when clicking outside
-    window.addEventListener("click", function (event) {
-      if (event.target === modal) {
-        closeModal();
-      }
-    });
-  }
-
-  function closeModal() {
-    var modal = document.getElementById("ecomm-infoModal");
-    modal.style.display = "none";
-  }
-
-
-
-
-  function showEnvironmentDiv(environmentAmount, text, price) {
+function showEnvironmentDiv(environmentAmount, text, price) {
     var newDiv = document.createElement("div");
 
    newDiv.innerHTML = `
@@ -419,6 +397,24 @@
   //let switchCheckbox = document.getElementById('ecomm-mainSwitch');
   let infoButton = document.getElementById('ecomm-infoButton');
   let infoClose = document.getElementById('ecomm-infoClose');
+  
+  
+  function openModal() {
+    var modal = document.getElementById("ecomm-infoModal");
+    modal.style.display = "block";
+
+    // Add event listener to close modal when clicking outside
+    window.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+  }
+
+  function closeModal() {
+    var modal = document.getElementById("ecomm-infoModal");
+    modal.style.display = "none";
+  }
 
   infoButton.addEventListener('click', function () {
     openModal()
