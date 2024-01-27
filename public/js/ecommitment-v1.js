@@ -413,17 +413,17 @@ function showEnvironmentDiv(environmentAmount, text, price) {
     modal.style.display = "block";
 
     // Add event listener to close modal when clicking outside
-    window.addEventListener("click", function (event) {
-      if (event.target === modal) {
-        closeModal();
-      }
-    });
-  }
+  //   window.addEventListener("click", function (event) {
+  //     if (event.target === modal) {
+  //       closeModal();
+  //     }
+  //   });
+  // }
 
   function closeModal() {
     var modal = document.getElementById("ecomm-infoModal");
     modal.style.display = "none";
   }
   
-  
+
 })();
