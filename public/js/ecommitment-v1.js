@@ -419,12 +419,12 @@
     document.head.appendChild(style);
   }
 
-  infoButton.addEventListener('click', function () {
-    openModal()
-  })
-  infoClose.addEventListener('click', function () {
-    closeModal()
-  })
+  // infoButton.addEventListener('click', function () {
+  //   openModal()
+  // })
+  // infoClose.addEventListener('click', function () {
+  //   closeModal()
+  // })
 
   showEnvironmentDiv(5, "aporta al medioambiente!", 4);
 })();
