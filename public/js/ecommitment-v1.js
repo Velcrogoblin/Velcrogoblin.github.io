@@ -2,6 +2,14 @@
   //GLOBALS
   const store_id = LS.store.id;
 
+  //JAVASCRIPT
+
+ // let switchCheckbox = document.getElementById('ecomm-mainSwitch');
+  let infoButton = document.getElementById('ecomm-infoButton');
+  let infoClose = document.getElementById('ecomm-infoClose');
+
+
+
   function openModal() {
     var modal = document.getElementById("ecomm-infoModal");
     modal.style.display = "block";
@@ -417,6 +425,6 @@
   infoClose.addEventListener('click', function () {
     closeModal()
   })
-  
+
   showEnvironmentDiv(5, "aporta al medioambiente!", 4);
 })();
