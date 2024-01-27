@@ -395,30 +395,28 @@ function showEnvironmentDiv(environmentAmount, text, price) {
   }
 
   //let switchCheckbox = document.getElementById('ecomm-mainSwitch');
+  
+  
+  
+  
+  
 
   showEnvironmentDiv(5, "aporta al medioambiente!", 4);
 
   let infoButton = document.getElementById('ecomm-infoButton');
   let infoClose = document.getElementById('ecomm-infoClose');
 
-  infoButton.addEventListener('click', function () {
-    openModal()
-  })
-  infoClose.addEventListener('click', function () {
-    closeModal()
-  })
-
   function openModal() {
     var modal = document.getElementById("ecomm-infoModal");
     modal.style.display = "block";
 
     // Add event listener to close modal when clicking outside
-  //   window.addEventListener("click", function (event) {
-  //     if (event.target === modal) {
-  //       closeModal();
-  //     }
-  //   });
-  // }
+    window.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+  }
 
   function closeModal() {
     var modal = document.getElementById("ecomm-infoModal");
@@ -426,4 +424,10 @@ function showEnvironmentDiv(environmentAmount, text, price) {
   }
   
 
+  infoButton.addEventListener('click', function () {
+    openModal()
+  })
+  infoClose.addEventListener('click', function () {
+    closeModal()
+  })
 })();
