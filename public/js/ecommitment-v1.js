@@ -30,7 +30,8 @@
 
       const data = await response.json();
 
-      console.log(` esta es la data que me llega de response: ${data}`);
+      console.log("me llega esta data como product quantity", data, "y esto es un string de relleno");
+      console.log("esta es solo la quantity de la respuesta", data.fractionQuantity.quantity);
 
       return data.fractionQuantity.quantity;
     } catch (error) {
