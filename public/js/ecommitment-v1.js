@@ -432,11 +432,11 @@
   }
 
   
-  const productQuantity = getProductQuantity().then((res) => {res.fractionQuantity.quantity});
-
-  console.log(` este es el product quantity: ${productQuantity}`);
-  
-  showEnvironmentDiv(productQuantity, "aporta al medioambiente!", 4);
+  getProductQuantity().then((res) => {
+    const quantity = res.fractionQuantity.quantity;
+    console.log(` esto llega despues de la promesa: ${quantity}`);
+    showEnvironmentDiv(quantity, "aporta al medioambiente!", 4);
+  });
 
   let infoButton = document.getElementById('ecomm-infoButton');
   let infoClose = document.getElementById('ecomm-infoClose');
