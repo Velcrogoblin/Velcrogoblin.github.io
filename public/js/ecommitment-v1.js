@@ -30,6 +30,8 @@
 
       const data = await response.json();
 
+      console.log(` esta es la data que me llega de response: ${data}`);
+
       return data.fractionQuantity.quantity;
     } catch (error) {
       console.error('Error:', error);
@@ -430,6 +432,8 @@
 
   
   const productQuantity = getProductQuantity();
+
+  console.log(` este es el product quantity: ${productQuantity}`);
   
   showEnvironmentDiv(productQuantity, "aporta al medioambiente!", 4);
 
