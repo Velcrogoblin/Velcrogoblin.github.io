@@ -1,4 +1,4 @@
-(async function () {
+(function () {
   //GLOBALS
   const storeId = LS.store.id;
 
@@ -33,7 +33,7 @@
       console.log("me llega esta data como product quantity", data, "y esto es un string de relleno");
       console.log("esta es solo la quantity de la respuesta", data.fractionQuantity.quantity);
 
-      return data.fractionQuantity.quantity;
+      return data;
     } catch (error) {
       console.error('Error:', error);
       return null;
@@ -432,7 +432,7 @@
   }
 
   
-  const productQuantity = await getProductQuantity();
+  const productQuantity = getProductQuantity().then((res) => {res.fractionQuantity.quantity});
 
   console.log(` este es el product quantity: ${productQuantity}`);
   
