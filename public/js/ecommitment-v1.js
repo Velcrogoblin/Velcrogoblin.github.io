@@ -1,4 +1,4 @@
-(function () {
+(async function () {
   //GLOBALS
   const storeId = LS.store.id;
 
@@ -432,7 +432,7 @@
   }
 
   
-  const productQuantity = getProductQuantity();
+  const productQuantity = await getProductQuantity();
 
   console.log(` este es el product quantity: ${productQuantity}`);
   
