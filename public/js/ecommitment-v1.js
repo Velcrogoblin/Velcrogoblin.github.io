@@ -1,50 +1,53 @@
 (function () {
+
   //GLOBALS
-  const storeId = LS.store.id;
+  const store_id = LS.store.id
+  const product_id = window.localStorage.getItem('Ecommitment-product_id');
+  const variant_id = window.localStorage.getItem('Ecommitment-variant_id');
 
-  //JAVASCRIPT
-  const getProductQuantity = async () => {
-    let body_object = {
-      "ecommerceId": storeId.toString(),
-      "shippingAddress": {
-          "city": LS.cart.shippingAddress.city,
-          "street": LS.cart.shippingAddress.address,
-          "number": parseInt(LS.cart.shippingAddress.number),
-          "zipcode": parseInt(LS.cart.shippingAddress.zipcode)
+  //FLUJOS DENTRO DEL JAVASCRIPT
+
+  //VALIDAR QUE EL BONO AMBIENTAL EXISTA EN PRODUCTOS. SI NO EXISTE, CREAR EL PRODUCTO. SINO DEVOLVER ESE DATO
+
+  //ESTO SE PUEDE HACER EN EL PASO ANTERIOR AL CHECKOUT. 
+
+  //MOSTRAR EL BONO AMBIENTAL EN ESE CHECKOUT (EL BONO AMBIENTAL PUEDE SER UNA IMAGEN O MEJORA DEL CHECKOUT)
+
+
+
+
+  // Your JavaScript
+  let switchCheckbox = document.getElementById('ecomm-mainSwitch');
+  let infoButton = document.getElementById('ecomm-infoButton');
+  let infoClose = document.getElementById('ecomm-infoClose');
+
+  //OBTENER INFO DEL SHIPPING Y CALCULAR DISTANCIA Y DEVOLVER EL environmentAmount
+
+
+  function openModal() {
+    var modal = document.getElementById("ecomm-infoModal");
+    modal.style.display = "block";
+
+    // Add event listener to close modal when clicking outside
+    window.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        closeModal();
       }
-    }
-    try {
-
-      const response = await fetch('http://localhost:5001/ecommitment-qa/us-central1/calculator/calculate-bond-fraction', {
-        method: 'POST',
-        body: JSON.stringify(body_object),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        console.error('Error:', response.statusText);
-        return null;
-      }
-
-      const data = await response.json();
-
-      console.log("me llega esta data como product quantity", data, "y esto es un string de relleno");
-      console.log("esta es solo la quantity de la respuesta", data.fractionQuantity.quantity);
-
-      return data;
-    } catch (error) {
-      console.error('Error:', error);
-      return null;
-    }
+    });
   }
 
-  
-  const showEnvironmentDiv = (quantity, text, price) => {
-    var newDiv = document.createElement("div");
+  function closeModal() {
+    var modal = document.getElementById("ecomm-infoModal");
+    modal.style.display = "none";
+  }
 
-   newDiv.innerHTML = `
+
+  function showEnvironmentDiv(environmentAmount, text, price) {
+
+    var newDiv = document.createElement('div');
+
+    // Set the HTML content of the subtotalDiv using innerHTML
+    newDiv.innerHTML = `
     <div class="ecomm-container">
     <div class="title-container">
       <!-- Rounded switch -->
@@ -52,7 +55,7 @@
           <img class="ecomm-logo" src="https://juanseferrari.github.io/ecommitment/public/images/logo_transparente_blanco.png" alt="">
         </a>
       <div style="display: flex;" class="ecomm-amount">
-        <p>$ ${quantity * price}</p>
+        <p>$ ${environmentAmount * price}</p>
 
       </div>
       <!-- Description -->
@@ -423,50 +426,319 @@
 
            `;
 
-    var reviewDiv4 = document.querySelector(".panel.panel-with-header");
+    var reviewDiv4 = document.querySelector('.panel.panel-with-header');
 
-    reviewDiv4.insertAdjacentElement("beforebegin", newDiv);
+    reviewDiv4.insertAdjacentElement('beforebegin', newDiv);
 
     document.head.appendChild(style);
-   
+    switchCheckbox = document.getElementById('ecomm-mainSwitch');
+    infoButton = document.getElementById('ecomm-infoButton');
+    infoClose = document.getElementById('ecomm-infoClose');
+
+  } //End function add EnvironmentDivv2
+
+  async function addProductToCart(product_id, variant_id, quantity) {
+    console.log("addProductToCart")
+    if (LS.cart.items) {
+      //datos hardocodeados, esto deberia ser dinamico por cada usuario despues. 
+      //aplicar la lógica del store_id
+      const data = new URLSearchParams();
+      data.append('add_to_cart', product_id); //product_id
+      data.append('variant_id', variant_id); //variant_id
+      data.append('quantity', quantity); //quantity
+
+      await fetch('/comprar/', {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Product added to cart successfully.');
+          } else {
+            console.log('Error while adding to cart.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+
+    }
   }
 
-  
-  getProductQuantity().then((res) => {
-    const quantity = res.fractionQuantity.quantity;
-    console.log(` esto llega despues de la promesa: ${quantity}`);
-    showEnvironmentDiv(quantity, "aporta al medioambiente!", 4);
-  });
+  async function removeUniqueProductFromCart(quantity, vid) {
+    console.log("removeUniqueProductFromCart")
+    let items_on_cart = LS.cart.items
+    console.log("items_on_cart")
+    console.log(items_on_cart)
+    console.log("items_on_cart")
 
-  let infoButton = document.getElementById('ecomm-infoButton');
-  let infoClose = document.getElementById('ecomm-infoClose');
+    var result = items_on_cart.filter(obj => {
+      return obj.variant_id == vid
+    })
 
-  function closeModal() {
-    var modal = document.getElementById("ecomm-infoModal");
-    modal.style.display = "none";
+    if (result.length === 1) {
+
+
+      let item_id = result[0].id.toString()
+      console.log("item_id with variant_id "+ vid + ": "+ item_id)
+
+      let body = new URLSearchParams();
+      body.append(`quantity[${item_id}]`, quantity.toString());
+
+      console.log("Request Body:", body.toString());
+
+
+      await fetch("/cart/update/", {
+        method: "POST",
+        body: body,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
+        .then((response) => {
+
+          if (response.ok) {
+            console.log("success remove cart");
+            reloadPageAfterDelay()
+
+          } else {
+            console.log("error remove cart");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          reloadPageAfterDelay()
+        });
+
+    }
+
   }
 
-  function openModal() {
-    var modal = document.getElementById("ecomm-infoModal");
-    modal.style.display = "block";
+  // Wait for 1 second (1000 milliseconds) and then reload the page
+  function reloadPageAfterDelay() {
+    setTimeout(function () {
+      // Reload the page after 1 second1
+      window.location.reload();
+    }, 400); // 1000 milliseconds = 1 second
+    //switchCheckbox.checked = true;
+  }
 
-    // Add event listener to close modal when clicking outside
-    window.addEventListener("click", function (event) {
-      if (event.target === modal) {
-        closeModal();
+
+  async function calculator() {
+    console.log("calculator");
+
+    let body_object = {
+      "ecommerceId": LS.store.id.toString(),
+      "shippingAddress": {
+          "city": LS.cart.shippingAddress.city,
+          "street": LS.cart.shippingAddress.address,
+          "number": parseInt(LS.cart.shippingAddress.number),
+          "zipcode": parseInt(LS.cart.shippingAddress.zipcode)
       }
+    }
+    try {
+      console.log("body_object");
+      console.log(body_object);
+      console.log("body_object");
+
+      const response = await fetch('https://us-central1-ecommitment-qa.cloudfunctions.net/calculator/calculate-bond-fraction', {
+        method: 'POST',
+        body: JSON.stringify(body_object),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        console.error('Error:', response.statusText);
+        return null;
+      }
+
+      const data = await response.json();
+
+      // Log the calculator_response within the async function
+      console.log('Parsed JSON data:', data);
+
+      // If you need to return the data from this function, you can do so here
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
+  }
+
+  async function performCalculation() {
+
+    try {
+      let calculator_response = await calculator();
+
+      return calculator_response;
+    } catch (error) {
+      console.error('Error during calculation:', error);
+      return null;
+    }
+  }
+
+  async function getProductData(store_id) {
+    console.log("getProductData");
+
+    try {
+      console.log(store_id);
+
+      const response = await fetch('https://us-central1-ecommitment-qa.cloudfunctions.net/storeAndProductInfo/get-store-and-product-info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"ecommerceId": store_id.toString()})
+
+      });
+
+      if (!response.ok) {
+        console.error('Error:', response.statusText);
+        return null;
+      }
+
+      const data = await response.json();
+
+      // Log the calculator_response within the async function
+      console.log('Parsed product JSON data:', data);
+
+      // If you need to return the data from this function, you can do so here
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
+  }
+
+
+  //Check pathname
+  //console.log(window.location.pathname)
+
+  if (!product_id && !variant_id) {
+    //get info of product
+    getProductData(store_id).then((product_data) => {
+      console.log("product_data")
+      console.log(product_data)
+      console.log("product_data")
+      window.localStorage.setItem('Ecommitment-product_id', product_data.product_id);
+      window.localStorage.setItem('Ecommitment-variant_id', product_data.variant_id);
+      window.localStorage.setItem('Ecommitment-product_price', product_data.product_price);
+
     });
   }
 
- 
+  // Check the current URL path
+  if (window.location.pathname.startsWith('/checkout/v3/next/')) {
+    //Chequear si tiene el producto cargado como bono ambiental.
 
 
-  infoButton.addEventListener('click', function () {
-    openModal()
-  });
+    //Obtener la data de la calculadora
+    performCalculation().then((calculation_response) => {
+      console.log("calculation_response")
+      console.log(calculation_response)
+      console.log("calculation_response")
 
-  infoClose.addEventListener('click', function () {
-    closeModal()
-  });
+      //Validar que el calculator response devuelva info, sino no mostrar el banner. 
+      //if(!calculation_response){
+      //  return true
+      //} 
+
+      let message = ""
+      let qty = calculation_response.fractionQuantity.quantity
+
+
+      //Validar el address
+      if (!LS.cart.shippingAddress.address) {
+        //Si no hay address de destino (osea no hay nada que pagar, hacer otra cosa. )
+        console.log("NO TIENE ADDRESS")
+        message = "¡Compensa el impacto ambiental de tu envío!"
+        qty = 1
+      } else {
+        console.log("TIENE ADDRESS")
+        message = "¡Compensa el impacto ambiental de tu envío!"
+      }
+      showEnvironmentDiv(qty, message, window.localStorage.getItem('Ecommitment-product_price'))
+
+
+      //PENDIENTE: SI NO TIENE EMISIONES, QUE EL CHECK ESTE VERDE.
+
+      for (let p = 0; p < LS.cart.items.length; p++) {
+        if (LS.cart.items[p].variant_id == window.localStorage.getItem('Ecommitment-variant_id')) {
+          console.log("variant " + window.localStorage.getItem('Ecommitment-variant_id') + " existe")
+          switchCheckbox.checked = true;
+          let cart_quantity = LS.cart.items[p].quantity
+          let calculator_quantity = qty
+          console.log("cart_quantity: " + cart_quantity)
+          console.log("calculator_quantity: " + calculator_quantity)
+          if(cart_quantity !== calculator_quantity){
+            removeUniqueProductFromCart(calculator_quantity, variant_id)
+            reloadPageAfterDelay();
+          }
+        }
+      }
+
+      // Check the state of the switch when it is clicked
+      switchCheckbox.addEventListener('change', function () {
+        if (switchCheckbox.checked) {
+          console.log('Switch is ON');
+          //Add product to cart for the amount given. 
+          addProductToCart(product_id, variant_id, qty)
+
+          // Call the function to initiate the delay and page reload
+          reloadPageAfterDelay();
+
+        } else {
+          //REMOVE PRODUCT. 
+          console.log('Switch is OFF');
+          //Remove product from cart for the amount given. 
+          removeUniqueProductFromCart(0, variant_id)
+
+          console.log("log after remove product")
+
+          // Call the function to initiate the delay and page reload
+          //reloadPageAfterDelay();
+        }
+      });
+      infoButton.addEventListener('click', function () {
+        openModal()
+      })
+      infoClose.addEventListener('click', function () {
+        closeModal()
+      })
+
+
+    })
+
+
+
+
+
+  } else {
+    console.log("start path")
+
+    getProductData(store_id).then((product_data) => {
+      console.log("product_data")
+      console.log(product_data)
+      console.log("product_data")
+      window.localStorage.setItem('Ecommitment-product_id', product_data.product_id);
+      window.localStorage.setItem('Ecommitment-variant_id', product_data.variant_id);
+      window.localStorage.setItem('Ecommitment-product_price', product_data.product_price);
+
+    });
+
+
+
+  }
+
+  console.log("LS")
+  console.log(LS)
+  console.log("LS")
+
 
 })();
