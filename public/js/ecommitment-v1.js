@@ -1,10 +1,44 @@
 (function () {
   //GLOBALS
-  const store_id = LS.store.id;
+  const storeId = LS.store.id;
 
   //JAVASCRIPT
+  const getProductQuantity = async () => {
+    let body_object = {
+      "ecommerceId": storeId.toString(),
+      "shippingAddress": {
+          "city": LS.cart.shippingAddress.city,
+          "street": LS.cart.shippingAddress.address,
+          "number": parseInt(LS.cart.shippingAddress.number),
+          "zipcode": parseInt(LS.cart.shippingAddress.zipcode)
+      }
+    }
+    try {
 
-function showEnvironmentDiv(environmentAmount, text, price) {
+      const response = await fetch('http://localhost:5001/ecommitment-qa/us-central1/calculator/calculate-bond-fraction', {
+        method: 'POST',
+        body: JSON.stringify(body_object),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        console.error('Error:', response.statusText);
+        return null;
+      }
+
+      const data = await response.json();
+
+      return data.fractionQuantity.quantity;
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
+  }
+
+  
+  const showEnvironmentDiv = (quantity, text, price) => {
     var newDiv = document.createElement("div");
 
    newDiv.innerHTML = `
@@ -15,7 +49,7 @@ function showEnvironmentDiv(environmentAmount, text, price) {
           <img class="ecomm-logo" src="https://juanseferrari.github.io/ecommitment/public/images/logo_transparente_blanco.png" alt="">
         </a>
       <div style="display: flex;" class="ecomm-amount">
-        <p>$ ${environmentAmount * price}</p>
+        <p>$ ${quantity * price}</p>
 
       </div>
       <!-- Description -->
@@ -394,17 +428,18 @@ function showEnvironmentDiv(environmentAmount, text, price) {
    
   }
 
-  //let switchCheckbox = document.getElementById('ecomm-mainSwitch');
   
+  const productQuantity = getProductQuantity();
   
-  
-  
-  
-
-  showEnvironmentDiv(5, "aporta al medioambiente!", 4);
+  showEnvironmentDiv(productQuantity, "aporta al medioambiente!", 4);
 
   let infoButton = document.getElementById('ecomm-infoButton');
   let infoClose = document.getElementById('ecomm-infoClose');
+
+  function closeModal() {
+    var modal = document.getElementById("ecomm-infoModal");
+    modal.style.display = "none";
+  }
 
   function openModal() {
     var modal = document.getElementById("ecomm-infoModal");
@@ -418,16 +453,15 @@ function showEnvironmentDiv(environmentAmount, text, price) {
     });
   }
 
-  function closeModal() {
-    var modal = document.getElementById("ecomm-infoModal");
-    modal.style.display = "none";
-  }
-  
+ 
+
 
   infoButton.addEventListener('click', function () {
     openModal()
-  })
+  });
+
   infoClose.addEventListener('click', function () {
     closeModal()
-  })
+  });
+
 })();
