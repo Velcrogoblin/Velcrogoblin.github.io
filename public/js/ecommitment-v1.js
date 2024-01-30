@@ -4,6 +4,9 @@
 
   //JAVASCRIPT
 
+  let infoButton;
+  let infoClose;
+  let switchCheckbox;
   //metodos
 
   const reloadPageAfterDelay = () => {
@@ -462,6 +465,10 @@
     reviewDiv4.insertAdjacentElement("beforebegin", newDiv);
 
     document.head.appendChild(style);
+
+    infoButton = document.getElementById('ecomm-infoButton');
+    infoClose = document.getElementById('ecomm-infoClose');
+    switchCheckbox = document.getElementById('ecomm-mainSwitch');
    
   }
 
@@ -550,6 +557,8 @@
 
     showEnvironmentDiv(quantity, "¡Compensa el impacto ambiental de tu envío!", window.localStorage.getItem('Ecommitment-product_price'));
 
+  
+
     for (let p = 0; p < LS.cart.items.length; p++) {
       if (LS.cart.items[p].variant_id == window.localStorage.getItem('Ecommitment-variant_id')) {
         switchCheckbox.checked = true;
@@ -575,9 +584,6 @@
   
 
 }
-
-let infoButton = document.getElementById('ecomm-infoButton');
-  let infoClose = document.getElementById('ecomm-infoClose');
 
   function closeModal() {
     var modal = document.getElementById("ecomm-infoModal");
