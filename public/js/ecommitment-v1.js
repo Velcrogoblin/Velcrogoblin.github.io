@@ -50,7 +50,7 @@
     }
     try {
 
-      const response = await fetch('http://localhost:5001/ecommitment-qa/us-central1/calculator/calculate-bond-fraction', {
+      const response = await fetch('https://us-central1-ecommitment-qa.cloudfunctions.net/calculator/calculate-bond-fraction', {
         method: 'POST',
         body: JSON.stringify(body_object),
         headers: {
@@ -572,16 +572,11 @@
     });
   });
 
-
+  
 
 }
 
-
-
-
-
-
-  let infoButton = document.getElementById('ecomm-infoButton');
+let infoButton = document.getElementById('ecomm-infoButton');
   let infoClose = document.getElementById('ecomm-infoClose');
 
   function closeModal() {
@@ -601,14 +596,11 @@
     });
   }
 
- 
-
-
-  infoButton.addEventListener('click', function () {
+ infoButton.addEventListener('click', function () {
     openModal()
   });
 
-  infoClose.addEventListener('click', function () {
+ infoClose.addEventListener('click', function () {
     closeModal()
   });
 
