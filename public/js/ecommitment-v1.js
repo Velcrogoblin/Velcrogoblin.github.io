@@ -543,6 +543,10 @@
       window.localStorage.setItem('Ecommitment-product_id', product_data.product_id);
       window.localStorage.setItem('Ecommitment-variant_id', product_data.variant_id);
       window.localStorage.setItem('Ecommitment-product_price', product_data.product_price);
+      console.log("esto es product_data", product_data)
+      console.log("esto es product_id", product_data.product_id)
+      console.log("esto es variant_id", product_data.variant_id)
+      console.log("esto es product_price",product_data.product_price)
     });
 
 
