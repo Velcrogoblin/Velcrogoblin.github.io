@@ -4,9 +4,9 @@
 
   //JAVASCRIPT
 
-  let infoButton;
-  let infoClose;
-  let switchCheckbox;
+  // let infoButton;
+  // let infoClose;
+  // let switchCheckbox;
   //metodos
 
   const reloadPageAfterDelay = () => {
@@ -466,10 +466,6 @@
 
     document.head.appendChild(style);
 
-    infoButton = document.getElementById('ecomm-infoButton');
-    infoClose = document.getElementById('ecomm-infoClose');
-    switchCheckbox = document.getElementById('ecomm-mainSwitch');
-   
   }
 
   const addProductToCart = async (productId, variantId, quantity) => {
@@ -557,6 +553,36 @@
 
     showEnvironmentDiv(quantity, "¡Compensa el impacto ambiental de tu envío!", window.localStorage.getItem('Ecommitment-product_price'));
 
+    let infoButton = document.getElementById('ecomm-infoButton');
+    let infoClose = document.getElementById('ecomm-infoClose');
+    let switchCheckbox = document.getElementById('ecomm-mainSwitch');
+
+    function closeModal() {
+      var modal = document.getElementById("ecomm-infoModal");
+      modal.style.display = "none";
+    }
+  
+    function openModal() {
+      var modal = document.getElementById("ecomm-infoModal");
+      modal.style.display = "block";
+  
+      // Add event listener to close modal when clicking outside
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+    }
+  
+   infoButton.addEventListener('click', function () {
+      openModal()
+    });
+  
+   infoClose.addEventListener('click', function () {
+      closeModal()
+    });
+   
+
   
 
     for (let p = 0; p < LS.cart.items.length; p++) {
@@ -585,29 +611,6 @@
 
 }
 
-  function closeModal() {
-    var modal = document.getElementById("ecomm-infoModal");
-    modal.style.display = "none";
-  }
-
-  function openModal() {
-    var modal = document.getElementById("ecomm-infoModal");
-    modal.style.display = "block";
-
-    // Add event listener to close modal when clicking outside
-    window.addEventListener("click", function (event) {
-      if (event.target === modal) {
-        closeModal();
-      }
-    });
-  }
-
- infoButton.addEventListener('click', function () {
-    openModal()
-  });
-
- infoClose.addEventListener('click', function () {
-    closeModal()
-  });
+ 
 
 })();
