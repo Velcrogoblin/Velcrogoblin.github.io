@@ -71,6 +71,8 @@
 
       const data = await response.json();
 
+      console.log("esta es la data que me llega del back con la quantity: ", data);
+
       return data;
     } catch (error) {
       console.error("Error:", error);
