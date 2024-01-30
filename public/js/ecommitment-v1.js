@@ -589,7 +589,7 @@
           let cart_quantity = LS.cart.items[p].quantity;
           let calculator_quantity = quantity;
           if (cart_quantity !== calculator_quantity) {
-            removeBondFromCart(calculator_quantity, variant_id);
+            removeBondFromCart(calculator_quantity, LS.cart.items[p].variant_id);
             reloadPageAfterDelay();
           }
         }
