@@ -34,7 +34,7 @@
     <div class="title-container">
       <!-- Rounded switch -->
         <a href="https://www.ecommitment.online" target="_blank">
-          <img class="ecomm-logo" src="https://velcrogoblin.github.io/public/images/logo_transparente_blanco.png" alt="">
+          <img class="ecomm-logo" src="https://juanseferrari.github.io/ecommitment/public/images/logo_transparente_blanco.png" alt="">
         </a>
       <div style="display: flex;" class="ecomm-amount">
         <p>$ ${environmentAmount * price}</p>
@@ -73,24 +73,27 @@
       <div class="modal-content">
         <span class="close-btn" id="ecomm-infoClose">&times;</span>
         <div class="ecomm-modal-container">
-          <h1 class="modal-main-title">Parque eólico Chubut</h1>
+          <h1 class="modal-main-title title1">Parque eólico Chubut</h1>
+
           <div class="modal-main-container">
             <div class="modal-midtext-left">
               <img src="https://ecommitment-634117e74352.herokuapp.com/images/eolico1.png" alt="">
             </div>
 
               <div class="modal-midtext-right">
+                <h1 class="modal-main-title title2">Parque eólico Chubut</h1>
                 <p>Escalante, Provincia de Chubut, en el sur de Argentina.</p>
-                <p>El proyecto consiste en la instalación de una central eólica llamada Greenfield que generará reducciones de emisiones de gases de efecto invernadero al desplazar la electricidad que sería producida por centrales eléctricas a base de combustibles fósiles.<a class="see_more" target="_blank" class="modal-link"  href="https://www.ecommitment.online">Ver más</a>
+                <p>El proyecto consiste en la instalación de una central eólica llamada Greenfield que generará reducciones de emisiones de gases de efecto invernadero al desplazar la electricidad que sería producida por centrales eléctricas a base de combustibles fósiles. <a class="see_more" target="_blank" class="modal-link"  href="https://www.ecommitment.online">Ver más</a>
                 </p>
+                  <div class="modal-footer">
+                    <p>Powered by </p>
+                    <a href="https://www.ecommitment.online" target="_blank">
+                      <img src="https://ecommitment-634117e74352.herokuapp.com/images/logo_transparente_on.png" alt="">
+                    </a> 
+                  </div>
               </div>
           </div>
-          <div class="modal-footer">
-            <p>Powered by </p>
-            <a href="https://www.ecommitment.online" target="_blank">
-              <img src="https://ecommitment-634117e74352.herokuapp.com/images/logo_transparente_on.png" alt="">
-            </a> 
-          </div>
+
         </div>
       </div>
     </div>
@@ -105,6 +108,15 @@
     style.textContent = `
 
     @media only screen and (max-width: 767px) {
+
+      .title1 {
+        display: block!important;
+        text-align: center;
+        margin-top: 40px;
+      }
+      .title2 {
+        display: none!important;
+      }
       /* Your mobile-specific styles go here */
       .select-button {
         padding: 10px 15px!important;
@@ -132,6 +144,12 @@
         max-width: 100%; /* Make sure images are responsive within the modal */
       }
     }
+    .title1 {
+      display: none
+    }
+    .title2 {
+      display: block
+    }
 
     .ecomm-container {
       margin: 20px 0;
@@ -158,11 +176,11 @@
     }
   
     .ecomm-description-container p {
-      font-size: 20px;
+      font-size: 15px;
     }
   
     .ecomm-logo {
-      height: 34px;
+      height: 27px;
     }
   
     .title-container {
@@ -176,7 +194,7 @@
       cursor: pointer;
     }
     .ecomm-amount p{
-      font-size: 24px;
+      font-size: 20px;
       margin: 0;
     }
   
@@ -254,7 +272,7 @@
       border-radius: 50%;
       background-position: center;
       background-size: cover;
-      background-image: url(https://velcrogoblin.github.io/public/images/earth.svg);
+      background-image: url(https://juanseferrari.github.io/ecommitment/public/images/earth.svg);
       background-repeat: no-repeat;
       background-color: rgba(255, 0, 0, 0);
       filter: invert(100%)
@@ -271,8 +289,8 @@
     .info-icon {
       color: grey;
       cursor: pointer;
-      height: 30px;
-      width: 30px;
+      height: 25px;
+      width: 25px;
     }
   
     .info-icon-svg {
@@ -337,8 +355,8 @@
     .close-btn {
       position: absolute;
       top: 10px;
-      right: 10px;
-      font-size: 20px;
+      right: 15px;
+      font-size: 30px;
       cursor: pointer;
     }
 
@@ -349,15 +367,13 @@
 .ecomm-modal-container {
   display: block;
 }
-.modal-main-title {
-  text-align: center;
-}
+
 .modal-main-container {
   display: flex;
   width: 70vw;
 }
 .modal-midtext-left {
-  width: 25%;
+  width: 35%;
   padding: 10px;
   position: relative;
 
@@ -365,13 +381,12 @@
 
 .modal-midtext-left img {
   max-width: 100%;
-  border-radius: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7), 0 -4px 8px rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
 
 }
 
 .modal-midtext-right {
-  width: 75%;
+  width: 65%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -398,11 +413,13 @@
   width: 100px;
   display: flex;
   justify-content: end;
+  font-size: 15px;
 }
 .modal-link {
   display: flex;
   justify-content: center;
 }
+
 
 
            `;
@@ -586,10 +603,10 @@
 
       //Validar el address
       if (!LS.cart.shippingAddress.address) {
-        message = "¡Compensa el impacto ambiental de tu envío!";
+        message = "¡Compensá el impacto ambiental de tu envío!";
         qty = 1;
       } else {
-        message = "¡Compensa el impacto ambiental de tu envío!";
+        message = "¡Compensá el impacto ambiental de tu envío!";
       }
 
       // despues de calcular la quantity, renderizar el banner
