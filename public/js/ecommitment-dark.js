@@ -620,9 +620,9 @@
         }
       }
 
-      const productAlreadyAdded = LS.cart.items.filter((p) => {
-        p.variant_id === window.localStorage.getItem('Ecommitment-variant_id')
-      });
+      const productAlreadyAdded = LS.cart.items.filter(p => 
+        p.variant_id == variant_id
+      );
 
       console.log("este es product already added ", productAlreadyAdded);
       console.log("estos son los items", LS.cart.items);
