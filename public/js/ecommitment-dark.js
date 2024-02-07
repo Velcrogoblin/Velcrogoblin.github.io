@@ -627,10 +627,10 @@
       console.log("este es product already added ", productAlreadyAdded);
       console.log("estos son los items", LS.cart.items);
 
-      // if (switchCheckbox.checked && productAlreadyAdded.length === 0) {
-      //   addProductToCart(product_id, variant_id, qty);
-      //   reloadPageAfterDelay();
-      // }
+      if (switchCheckbox.checked === true && productAlreadyAdded.length === 0) {
+        addProductToCart(product_id, variant_id, qty);
+        reloadPageAfterDelay();
+      }
 
       switchCheckbox.addEventListener('change', function () {
         if (switchCheckbox.checked) {
