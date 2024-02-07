@@ -620,9 +620,11 @@
         }
       }
 
-      // const productAlreadyAdded = LS.cart.items.filter((p) => {
-      //   p.variant_id === window.localStorage.getItem('Ecommitment-variant_id')
-      // });
+      const productAlreadyAdded = LS.cart.items.filter((p) => {
+        p.variant_id === window.localStorage.getItem('Ecommitment-variant_id')
+      });
+
+      console.log("este es product already added ", productAlreadyAdded);
 
       // if (switchCheckbox.checked && productAlreadyAdded.length === 0) {
       //   addProductToCart(product_id, variant_id, qty);
